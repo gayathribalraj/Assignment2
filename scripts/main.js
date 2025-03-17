@@ -1,4 +1,7 @@
 // Script for Teacher Page
+
+
+
 let problems = JSON.parse(localStorage.getItem("problems")) || [];
 
 function createQuestion() {
@@ -55,7 +58,7 @@ document.addEventListener("DOMContentLoaded", displayQuestions);
 
 
 // Script for Student Page
-function loadStudentQuestions() {
+function StudentQuestions() {
     const studentQuestionsDiv = document.getElementById("student-questions");
     studentQuestionsDiv.innerHTML = "";
     problems = JSON.parse(localStorage.getItem("problems")) || [];
@@ -102,4 +105,4 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
 });
 
-document.addEventListener("DOMContentLoaded", loadStudentQuestions);
+document.addEventListener("DOMContentLoaded", StudentQuestions);
