@@ -1,4 +1,5 @@
 // Script for Teacher Page
+
 let problems = JSON.parse(localStorage.getItem("problems")) || [];
 
 function createQuestion() {
@@ -33,9 +34,10 @@ function displayQuestions() {
         const questionDiv = document.createElement("div");
         questionDiv.className = "question-box";
         questionDiv.innerHTML = `
-            <p>num1 = ${p.num1}</p>
-            <p>num2 = ${p.num2}</p>
-            <p>Operator: ${p.operator}</p>
+            ${p.num1}
+          ${p.operator}
+            ${p.num2}
+            
         `;
         questionContainer.append(questionDiv);
     });
@@ -55,7 +57,7 @@ document.addEventListener("DOMContentLoaded", displayQuestions);
 
 
 // Script for Student Page
-function loadStudentQuestions() {
+function StudentQuestions() {
     const studentQuestionsDiv = document.getElementById("student-questions");
     studentQuestionsDiv.innerHTML = "";
     problems = JSON.parse(localStorage.getItem("problems")) || [];
@@ -64,10 +66,10 @@ function loadStudentQuestions() {
         let div = document.createElement("div");
         div.className = "question-box";
         div.innerHTML = `
-            <p>num1 = ${p.num1}</p>
-            <p>num2 = ${p.num2}</p>
-            <p>Operator: ${p.operator}</p>
-            <p>= <input type='number' id='answer${index}'></p>
+            ${p.num1}
+            ${p.operator}
+            ${p.num2} =
+            <p><input type='number' id='answer${index}'></p>
         `;
         studentQuestionsDiv.appendChild(div);
     });
@@ -80,20 +82,38 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     let correctAnswers = 0;
     problems = JSON.parse(localStorage.getItem("problems")) || [];
     
+    // Check if any answer field is empty
+
+
+    let allAnswered = true;
+    problems.forEach((p, index) => {
+        let studentAnswer = document.getElementById(`answer${index}`);
+        if (studentAnswer.value === "") {
+            allAnswered = false;
+        }
+    });
+
+    if (!allAnswered) {
+        alert("Please answer all the questions before submitting.");
+        return;
+    }
+    
     problems.forEach((p, index) => {
         let studentAnswer = document.getElementById(`answer${index}`);
         let studentValue = parseFloat(studentAnswer.value);
-        let resultSymbol = document.createElement("p");
-        
+        let resultSymbol = document.createElement("div");
+
         if (studentValue === p.ans) {
             studentAnswer.style.backgroundColor = "lightgreen";
-            resultSymbol.textContent = `✔️ Problem ${index + 1}`;
+            resultSymbol.innerHTML = `<i class="fa fa-check " style="color: green;"></i> Problem ${index + 1}`;  // Check icon
+            studentAnswer.style.color = "green";
+
             correctAnswers++;
         } else {
-            studentAnswer.style.backgroundColor = "lightredS";
-            resultSymbol.textContent = `❌ Problem ${index + 1}`;
+            studentAnswer.style.backgroundColor = "red";
+            resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`;  // Cross icon
         }
-        
+
         resultsDiv.appendChild(resultSymbol);
     });
     
@@ -102,4 +122,18 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
 });
 
-document.addEventListener("DOMContentLoaded", loadStudentQuestions);
+document.addEventListener("DOMContentLoaded", StudentQuestions);
+
+// restart the the calculation 
+
+document.getElementById("restart").addEventListener("click", function() {
+    let studentAnswerFields = document.querySelectorAll("[id^='answer']");
+    studentAnswerFields.forEach(field => {
+        field.value = ''; 
+        field.style.backgroundColor = '';
+        field.style.color = ''; 
+    });
+    document.getElementById("results").innerHTML = ''; 
+});
+
+document.addEventListener("DOMContentLoaded", StudentQuestions);

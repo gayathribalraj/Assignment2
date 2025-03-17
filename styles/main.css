@@ -34,24 +34,32 @@ ul{
 
 .task-creation-wizard{
     padding: 1em;
+    
 }
 
 .question-box {
-    width: 100px;
-    height: 120px;
-    background-color: yellow;
+    width: 80px;
+    height: 80px;
+    /* background-color: yellow; */
+    border: solid black;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 0.5;
 }
 
 input[type="number"] {
-    width: 60px; 
+    width: 70px; 
     padding: 1px;;
     text-align: center;
   }
-  
+
+ /* .fas fa-check
+ {
+    background-color: green;
+ }
+   */
