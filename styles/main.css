@@ -20,6 +20,10 @@ ul{
     width: 75%;
     height: 100%;
     background-color: #d4d4d4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
 }
 
 .task-maker-container{
@@ -31,3 +35,23 @@ ul{
 .task-creation-wizard{
     padding: 1em;
 }
+
+.question-box {
+    width: 100px;
+    height: 120px;
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    line-height: 0.5;
+}
+
+input[type="number"] {
+    width: 60px; 
+    padding: 1px;;
+    text-align: center;
+  }
+  
