@@ -36,9 +36,10 @@ function displayQuestions() {
         const questionDiv = document.createElement("div");
         questionDiv.className = "question-box";
         questionDiv.innerHTML = `
-            <p>num1 = ${p.num1}</p>
-            <p>num2 = ${p.num2}</p>
-            <p>Operator: ${p.operator}</p>
+            ${p.num1}
+          ${p.operator}
+            ${p.num2}
+            
         `;
         questionContainer.append(questionDiv);
     });
@@ -67,10 +68,10 @@ function StudentQuestions() {
         let div = document.createElement("div");
         div.className = "question-box";
         div.innerHTML = `
-            <p>num1 = ${p.num1}</p>
-            <p>num2 = ${p.num2}</p>
-            <p>Operator: ${p.operator}</p>
-            <p>= <input type='number' id='answer${index}'></p>
+            ${p.num1}
+            ${p.operator}
+            ${p.num2} =
+            <p><input type='number' id='answer${index}'></p>
         `;
         studentQuestionsDiv.appendChild(div);
     });
@@ -86,23 +87,47 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     problems.forEach((p, index) => {
         let studentAnswer = document.getElementById(`answer${index}`);
         let studentValue = parseFloat(studentAnswer.value);
-        let resultSymbol = document.createElement("p");
+        let resultSymbol = document.createElement("div");
         
-        if (studentValue === p.ans) {
-            studentAnswer.style.backgroundColor = "lightgreen";
-            resultSymbol.textContent = `✔️ Problem ${index + 1}`;
-            correctAnswers++;
-        } else {
-            studentAnswer.style.backgroundColor = "lightredS";
-            resultSymbol.textContent = `❌ Problem ${index + 1}`;
+ if (studentAnswer.value === "") {  
+            alert(`Please Enter answer question ${index + 1}`);
+            allAnswered = false;
+            return; 
+            
         }
-        
+         
+if (studentValue === p.ans) {
+    studentAnswer.style.backgroundColor = "lightgreen";
+    resultSymbol.innerHTML = `<i class="fa fa-check " style="color: green;"></i> Problem ${index + 1}`; 
+
+    correctAnswers++;
+} else {
+    studentAnswer.style.backgroundColor = "red";
+    resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`; 
+}
+
         resultsDiv.appendChild(resultSymbol);
     });
-    
-    let totalQuestions = problems.length;
-    let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
-    resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
+
+    if (allAnswered) {
+        let totalQuestions = problems.length;
+        let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
+        resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
+    }
 });
 
 document.addEventListener("DOMContentLoaded", StudentQuestions);
+
+
+document.getElementById("restart-quiz").addEventListener("click", function() {
+    let studentAnswerFields = document.querySelectorAll("[id^='answer']");
+    studentAnswerFields.forEach(field => {
+        field.value = ''; 
+        field.style.backgroundColor = '';
+        field.style.color = ''; 
+    });
+    document.getElementById("results").innerHTML = ''; 
+});
+
+document.addEventListener("DOMContentLoaded", StudentQuestions);
+
