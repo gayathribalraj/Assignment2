@@ -1,0 +1,12 @@
+.leftside-menu{
+    width: 100px;
+    height: 100%;
+    background-color: deepskyblue;
+    color: black;
+    margin: 0;
+    padding: 1em;
+}
+
+.menu-active{
+    display: none;
+}
