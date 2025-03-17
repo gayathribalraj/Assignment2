@@ -1,5 +1,7 @@
 // Script for Teacher Page
 
+
+
 let problems = JSON.parse(localStorage.getItem("problems")) || [];
 
 function createQuestion() {
@@ -82,51 +84,42 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     let correctAnswers = 0;
     problems = JSON.parse(localStorage.getItem("problems")) || [];
     
-    // Check if any answer field is empty
-
-
-    let allAnswered = true;
-    problems.forEach((p, index) => {
-        let studentAnswer = document.getElementById(`answer${index}`);
-        if (studentAnswer.value === "") {
-            allAnswered = false;
-        }
-    });
-
-    if (!allAnswered) {
-        alert("Please answer all the questions before submitting.");
-        return;
-    }
-    
     problems.forEach((p, index) => {
         let studentAnswer = document.getElementById(`answer${index}`);
         let studentValue = parseFloat(studentAnswer.value);
         let resultSymbol = document.createElement("div");
-
-        if (studentValue === p.ans) {
-            studentAnswer.style.backgroundColor = "lightgreen";
-            resultSymbol.innerHTML = `<i class="fa fa-check " style="color: green;"></i> Problem ${index + 1}`;  // Check icon
-            studentAnswer.style.color = "green";
-
-            correctAnswers++;
-        } else {
-            studentAnswer.style.backgroundColor = "red";
-            resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`;  // Cross icon
+        
+ if (studentAnswer.value === "") {  
+            alert(`Please Enter answer question ${index + 1}`);
+            allAnswered = false;
+            return; 
+            
         }
+         
+if (studentValue === p.ans) {
+    studentAnswer.style.backgroundColor = "lightgreen";
+    resultSymbol.innerHTML = `<i class="fa fa-check " style="color: green;"></i> Problem ${index + 1}`; 
+
+    correctAnswers++;
+} else {
+    studentAnswer.style.backgroundColor = "red";
+    resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`; 
+}
 
         resultsDiv.appendChild(resultSymbol);
     });
-    
-    let totalQuestions = problems.length;
-    let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
-    resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
+
+    if (allAnswered) {
+        let totalQuestions = problems.length;
+        let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
+        resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
+    }
 });
 
 document.addEventListener("DOMContentLoaded", StudentQuestions);
 
-// restart the the calculation 
 
-document.getElementById("restart").addEventListener("click", function() {
+document.getElementById("restart-quiz").addEventListener("click", function() {
     let studentAnswerFields = document.querySelectorAll("[id^='answer']");
     studentAnswerFields.forEach(field => {
         field.value = ''; 
@@ -137,3 +130,4 @@ document.getElementById("restart").addEventListener("click", function() {
 });
 
 document.addEventListener("DOMContentLoaded", StudentQuestions);
+
