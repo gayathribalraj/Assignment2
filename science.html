@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Panel</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <h1>Science Teacher</h1>
+    <div class="container">
+        <div class="leftside-menu">
+            <p style="cursor: pointer;" onclick="toggleMenu()">Classes</p>
+            <ul id="menu-ul">
+                <li><a href="maths.html">Mathematics</a></li>
+                <li><a href="science.html">Science</a></li>
+                <li><a href="english.html">English</a></li>
+                <li><a href="index.html">Home</a></li>
+
+            </ul>
+        </div>
+        <div class="question-container" id="question-li">
+        
+        </div>
+        <div class="task-maker-container">
+            <div class="task-creation-wizard">
+                <h2>Create a Science Question</h2>
+                <input type="text" id="q1" placeholder="Enter Your Question" style="margin-bottom: 10px;"><br>
+                <input type="text" id="q1ans" placeholder="Enter The Answer" style="margin-bottom: 10px;"><br>
+                <button style="margin-top: 50px;" onclick="createQuestion()">Create Question</button>
+                <button onclick="clearQuestions()">Clear Questions</button>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/main.js"></script>
+    <script src="./scripts/menu.js"></script>
+    <script src="./scripts/science.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 .leftside-menu{
-    width: 100px;
+    width: 10%;
     height: 100%;
-    background-color: deepskyblue;
+    background-color: #ccc;
     color: black;
     margin: 0;
     padding: 1em;
@@ -9,4 +9,14 @@
 
 .menu-active{
     display: none;
+}
+#menu-ul,li
+{
+    padding: 10px;
+}
+#menu-ul,li,a
+{
+    color: rgba(57, 2, 66, 0.897);
+    text-decoration: none;
+
 }

@@ -18,12 +18,19 @@ ul{
 }
 
 .question-container{
-    width: 75%;
+    width: 60%;
     height: 100%;
     background-color: #d4d4d4;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    padding: 10px;
+}
+.question-container-student{
+    width: 60%;
+    height: 100%;
+    background-color: #d4d4d4;
+    display: flex;
+    flex-wrap: wrap;
     padding: 10px;
 }
 
@@ -51,16 +58,49 @@ ul{
     text-align: center;
     font-size: 15px;
     line-height: 0.5;
+    margin-left: 5px;
+
 }
+
+.question-box-science {
+    width: 150px;
+    height: 100px;
+    /* background-color: yellow; */
+    border: solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    text-align: center;
+    font-size: 15px;
+    /* line-height: 1.5; */
+    margin-left: 5px;
+
+}
+
+.question-box-english {
+    width: 150px;
+    height: 100px;
+    /* background-color: yellow; */
+    border: solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    text-align: center;
+    font-size: 15px;
+    margin-left: 5px;
+    /* line-height: 1.5; */
+
+}
+
+
+
 
 input[type="number"] {
     width: 70px; 
     padding: 1px;;
     text-align: center;
   }
-
- /* .fas fa-check
- {
-    background-color: green;
- }
-   */
