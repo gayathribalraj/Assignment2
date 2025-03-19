@@ -46,8 +46,8 @@ ul{
 }
 
 .question-box {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 100px;
     /* background-color: yellow; */
     border: solid black;
     border-radius: 10px;
@@ -63,8 +63,8 @@ ul{
 }
 
 .question-box-science {
-    width: 150px;
-    height: 100px;
+    width: 200px;
+    height: 120px;
     /* background-color: yellow; */
     border: solid black;
     border-radius: 10px;
@@ -80,8 +80,8 @@ ul{
 }
 
 .question-box-english {
-    width: 150px;
-    height: 100px;
+    width: 200px;
+    height: 120px;
     /* background-color: yellow; */
     border: solid black;
     border-radius: 10px;
@@ -101,6 +101,11 @@ ul{
 
 input[type="number"] {
     width: 70px; 
+    padding: 1px;;
+    text-align: center;
+  }
+  input[type="text"] {
+    width: 120px; 
     padding: 1px;;
     text-align: center;
   }
