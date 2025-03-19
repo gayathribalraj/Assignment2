@@ -44,11 +44,9 @@ function clearQuestions() {
     localStorage.removeItem("smcq");
     displayQuestions();
 }
+document.addEventListener("DOMContentLoaded", displayQuestions);
 
-document.addEventListener("DOMContentLoaded", function() {
-    displayQuestions(); 
-    ScienceStudentQuestions();
-});
+
 
 
 // Script for Student Page
@@ -83,7 +81,7 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
 
     let allAnswered = true;
     smcq.forEach((s, index) => {
-        let studentAnswer1 = document.getElementById(`answer${index}`);
+        let studentAnswer1 = document.getElementById(`answer1${index}`);
         if (studentAnswer1.value === "") {
             allAnswered = false;
         }
@@ -117,10 +115,7 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    displayQuestions(); 
-    ScienceStudentQuestions();
-});
+document.addEventListener("DOMContentLoaded", StudentQuestions);
 
 // restart the the calculation 
 
@@ -138,4 +133,3 @@ document.addEventListener("DOMContentLoaded", function() {
     displayQuestions(); 
     ScienceStudentQuestions();
 });
-console.log(smcq);

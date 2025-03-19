@@ -8,7 +8,7 @@ function createQuestion() {
     const operator = document.getElementById("operator").value;
     
     if (num1 === "" || num2 === "") {
-        alert("Please enter both numbers.");
+        alert("Please Fill both Qustine and Answare.");
         return;
     }
     
@@ -50,10 +50,6 @@ function clearQuestions() {
 }
 
 document.addEventListener("DOMContentLoaded", displayQuestions);
-
-
-
-
 
 
 // Script for Student Page
