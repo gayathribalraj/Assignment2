@@ -2,7 +2,18 @@
 // Science for Teacher Page
 
 
+const addoption = document.getElementById('addoption');
+const textBoxContainer = document.getElementById('textBoxContainer')
 
+addoption.addEventListener('click', function()
+{
+const newText = document.createElement('input');
+    newText.classList.add('text-box');
+    newText.type ='text';
+
+    textBoxContainer.appendChild(newText);
+
+});
 
 const userQuiz = [
     {
@@ -31,30 +42,13 @@ const userQuiz = [
   ];
 
 
-  const addoption = document.getElementById('addoption');
-  const textBoxContainer = document.getElementById('textBoxContainer')
-  
-  addoption.addEventListener('click', function()
-  {
-  const newText = document.createElement('input');
-      newText.classList.add('text-box');
-      newText.type ='text';
-      const opsans=  newText.id='optionanswer';
-  
-      textBoxContainer.appendChild(newText);
-  
-  });
 
-
-  
 
 let smcq = JSON.parse(localStorage.getItem("smcq")) || [];
 
 function createQuestion() {
     const q1 = document.getElementById("q1").value;
     const q1ans = document.getElementById("q1ans").value;
-    const opsans=opsans;
-    ;
     
     if (q1 === "" || q1ans === "") {
         alert("Please Fill both Qustine and Answare.");
@@ -64,9 +58,8 @@ function createQuestion() {
     const sciencequestion = {
         id: smcq.length + 1,
         q1: q1,
-        options:[],
         q1ans: q1ans,
-
+       options:['8','10']
     };
     
     smcq.push(sciencequestion);
@@ -112,7 +105,7 @@ function ScienceStudentQuestions() {
         div.className = "question-box-science";
         let opts = ``
         let sel = `
-            ${s.question}
+            ${s.q1}
  <select id="answer1${index}" style="margin-bottom: 20px;">
         `;
         s.options.forEach(o=>{
