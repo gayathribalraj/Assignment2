@@ -42,11 +42,7 @@ function createQuestion() {
    
     
     const optionValues = options.map(option => option.value);
-    if (optionValues.length < 4) {
-        alert("Please fill in all 4 options.");
-        return;
-    }
-
+   
      const scienceQuestion = {
         id: smcq.length + 1,
         q1: q1,
@@ -132,16 +128,17 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     let resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
     let correctAnswers = 0;
-    smcq = JSON.parse(localStorage.getItem("userQuiz")) || [];
+    let allAnswered = true;
 
     // Check if any answer field is empty
 
-    let allAnswered = true;
     smcq.forEach((s, index) => {
-        let studentAnswer1 = document.getElementById(`answer1${index}`);
+        let studentAnswer1 = document.getElementById(`answer1${index}`).value;
         if (studentAnswer1.value === "/") {
             allAnswered = false;
         }
+
+        userAnswers[index] = studentAnswer1;
     });
 
     if (!allAnswered) {
@@ -150,17 +147,13 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     }
     
     smcq.forEach((s, index) => {
-        let studentAnswer1 = document.getElementById(`answer1${index}`);
-        let studentValue = studentAnswer1.value;
+        let studentAnswer1 = userAnswers[index];
         let resultSymbol = document.createElement("div");
 
-        if (studentValue === s.q1ans) {
-            studentAnswer1.style.backgroundColor = "lightgreen";
+        if (studentAnswer1 === s.q1ans) {
             resultSymbol.innerHTML = `<i class="fa fa-check" style="color: green;"></i> Problem ${index + 1}`; 
-            studentAnswer1.style.color = "green";
             correctAnswers++;
         } else {
-            studentAnswer1.style.backgroundColor = "red";
             resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`;  
         }
 
@@ -170,22 +163,28 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     let totalQuestions = smcq.length;
     let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
+
+    localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+
 });
+
+
+// Restart the quiz
 
 document.getElementById("restart").addEventListener("click", function() {
     let studentAnswer1Fields = document.querySelectorAll("[id^='answer1']");
     studentAnswer1Fields.forEach(field => {
         field.value = '/'; 
-        field.style.backgroundColor = '';
-        field.style.color = ''; 
     });
     document.getElementById("results").innerHTML = ''; 
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    displayQuestions();  
-    ScienceStudentQuestions();  
+    if (document.body.contains(document.getElementById('question-li'))) {
+        ScienceStudentQuestions();  
+    } else {
+        displayQuestions();
+    }
 });
-
 
 
