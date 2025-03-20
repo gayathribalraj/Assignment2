@@ -26,8 +26,15 @@
             <div class="task-creation-wizard">
                 <h2>Create a Science Question</h2>
                 <input type="text" id="q1" placeholder="Enter Your Question" style="margin-bottom: 10px;"><br>
-                <input type="text" id="q1ans" placeholder="Enter The Answer" style="margin-bottom: 10px;"><br>
-                <button style="margin-top: 50px;" onclick="createQuestion()">Create Question</button>
+                <input type="text" id="q1ans" placeholder="Enter The Answer" style="margin-bottom: 10px;"><button id="addoption">+</button>
+                <div id="textBoxContainer">
+
+
+                </div>
+                
+                
+                <button style="margin-top: 10px;" onclick="createQuestion()">Create Question</button>
+
                 <button onclick="clearQuestions()">Clear Questions</button>
         </div>
     </div>

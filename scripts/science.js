@@ -1,6 +1,9 @@
 
 // Science for Teacher Page
 
+
+
+
 const userQuiz = [
     {
       id: 1,
@@ -23,15 +26,35 @@ const userQuiz = [
       id: 3,
       question: "What is the opposite of 'big'?",
       options: ["Small", "Tall", "Large", "Heavy"],
-      answer: "A) Small"
+      answer: " Small"
     }
   ];
+
+
+  const addoption = document.getElementById('addoption');
+  const textBoxContainer = document.getElementById('textBoxContainer')
+  
+  addoption.addEventListener('click', function()
+  {
+  const newText = document.createElement('input');
+      newText.classList.add('text-box');
+      newText.type ='text';
+      const opsans=  newText.id='optionanswer';
+  
+      textBoxContainer.appendChild(newText);
+  
+  });
+
+
+  
 
 let smcq = JSON.parse(localStorage.getItem("smcq")) || [];
 
 function createQuestion() {
     const q1 = document.getElementById("q1").value;
     const q1ans = document.getElementById("q1ans").value;
+    const opsans=opsans;
+    ;
     
     if (q1 === "" || q1ans === "") {
         alert("Please Fill both Qustine and Answare.");
@@ -41,8 +64,9 @@ function createQuestion() {
     const sciencequestion = {
         id: smcq.length + 1,
         q1: q1,
+        options:[],
         q1ans: q1ans,
-      
+
     };
     
     smcq.push(sciencequestion);
@@ -82,7 +106,7 @@ function ScienceStudentQuestions() {
     const scienceStudentQuestionsDiv = document.getElementById("question-li");
     scienceStudentQuestionsDiv.innerHTML = "";
     smcq = JSON.parse(localStorage.getItem("smcq")) || [];
-    console.log(smcq)
+     console.log(smcq)
     userQuiz.forEach((s, index) => {
         let div = document.createElement("div");
         div.className = "question-box-science";
@@ -99,7 +123,6 @@ function ScienceStudentQuestions() {
         div.innerHTML = `${sel} </select>`
 
         scienceStudentQuestionsDiv.appendChild(div);
-        renderDynamicDropdown();
         
     });
 }
@@ -119,12 +142,12 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     let resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
     let correctAnswers = 0;
-    smcq = JSON.parse(localStorage.getItem("smcq")) || [];
+    userQuiz = JSON.parse(localStorage.getItem("userQuiz")) || [];
 
     // Check if any answer field is empty
 
     let allAnswered = true;
-    smcq.forEach((s, index) => {
+    userQuiz.forEach((s, index) => {
         let studentAnswer1 = document.getElementById(`answer1${index}`);
         if (studentAnswer1.value === "/") {
             allAnswered = false;
@@ -136,7 +159,7 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
         return;
     }
     
-    smcq.forEach((s, index) => {
+    userQuiz.forEach((s, index) => {
         let studentAnswer1 = document.getElementById(`answer1${index}`);
         let studentValue = studentAnswer1.value;
         let resultSymbol = document.createElement("div");
@@ -154,7 +177,7 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
         resultsDiv.appendChild(resultSymbol);
     });
     
-    let totalQuestions = smcq.length;
+    let totalQuestions = userQuiz.length;
     let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
 });
