@@ -2,49 +2,34 @@
 // Science for Teacher Page
 
 
-const addoption = document.getElementById('addoption');
-const textBoxContainer = document.getElementById('textBoxContainer')
+const textBoxContainer = document.getElementById('textBoxContainer');
+const addOptionButton = document.getElementById('addoption');
+const createQuestionButton = document.querySelector("button[onclick='createQuestion()']");
+const clearQuestionsButton = document.querySelector("button[onclick='clearQuestions()']");
 
-addoption.addEventListener('click', function()
+
+// option input event 
+
+addOptionButton?.addEventListener('click', function()
 {
-const newText = document.createElement('input');
-    newText.classList.add('text-box');
-    newText.type ='text';
-
-    textBoxContainer.appendChild(newText);
-
-});
-
-const userQuiz = [
-    {
-      id: 1,
-      question: "Which of these is a noun?",
-      options: ["Run", "Happy", "Dog", "Slowly"],
-      answer: "Dog"
-    },
-    {
-      id: 2,
-      question: "Which sentence is correct?",
-      options: [
-        "She can sings well.",
-        "She can sing well.",
-        "She can singing well.",
-        "She can sung well."
-      ],
-      answer: "She can sing well."
-    },
-    {
-      id: 3,
-      question: "What is the opposite of 'big'?",
-      options: ["Small", "Tall", "Large", "Heavy"],
-      answer: " Small"
+    if (options.length < 6) {
+        const newOption = document.createElement('input');
+        newOption.classList.add('text-box');
+        newOption.type = 'text';
+        newOption.placeholder = `Enter Option ${options.length + 1}`;
+        textBoxContainer.appendChild(newOption);
+        options.push(newOption);
+    } else {
+        alert("You can only add up to 6 options.");
     }
-  ];
-
+});
 
 
 
 let smcq = JSON.parse(localStorage.getItem("smcq")) || [];
+let options = []; 
+let userAnswers = JSON.parse(localStorage.getItem("userAnswers")) || []; 
+
 
 function createQuestion() {
     const q1 = document.getElementById("q1").value;
@@ -54,17 +39,31 @@ function createQuestion() {
         alert("Please Fill both Qustine and Answare.");
         return;
     }
+   
     
-    const sciencequestion = {
+    const optionValues = options.map(option => option.value);
+    if (optionValues.length < 4) {
+        alert("Please fill in all 4 options.");
+        return;
+    }
+
+     const scienceQuestion = {
         id: smcq.length + 1,
         q1: q1,
         q1ans: q1ans,
-       options:['8','10']
+        options: optionValues
     };
-    
-    smcq.push(sciencequestion);
+
+    smcq.push(scienceQuestion);
     localStorage.setItem("smcq", JSON.stringify(smcq));
     
+    
+    document.getElementById("q1").value = '';
+    document.getElementById("q1ans").value = '';
+    options.forEach(option => option.value = '');
+
+
+
     displayQuestions();
 }
 
@@ -98,15 +97,21 @@ document.addEventListener("DOMContentLoaded", displayQuestions);
 function ScienceStudentQuestions() {
     const scienceStudentQuestionsDiv = document.getElementById("question-li");
     scienceStudentQuestionsDiv.innerHTML = "";
-    smcq = JSON.parse(localStorage.getItem("smcq")) || [];
-     console.log(smcq)
-    userQuiz.forEach((s, index) => {
+
+    
+   smcq = JSON.parse(localStorage.getItem("smcq")) || [];
+    //  console.log(smcq)
+
+    smcq.forEach((s, index) => {
         let div = document.createElement("div");
         div.className = "question-box-science";
         let opts = ``
         let sel = `
             ${s.q1}
- <select id="answer1${index}" style="margin-bottom: 20px;">
+       <select id="answer1${index}" style="margin-bottom: 20px;">
+        <option value="/">...Select Answer</option>
+
+
         `;
         s.options.forEach(o=>{
             opts+=`<option value="${o}">${o}</option>`
@@ -120,14 +125,6 @@ function ScienceStudentQuestions() {
     });
 }
 
-  // <select id="answer1${index}" style="margin-bottom: 20px;">
-            //     <option value="/">...Select Answer</option>
-            //     <option id ="1" value="The Moon">A) The Moon</option>
-            //     <option value="The Sun">B) The Sun</option>
-            //     <option value="Volcanoes">C) Volcanoes</option>
-            //     <option value="Ocean currents">D) Ocean currents</option>
-            // </select>
-            
 
 
 document.getElementById("submit-answers").addEventListener("click", function(event) {
@@ -135,12 +132,12 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     let resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
     let correctAnswers = 0;
-    userQuiz = JSON.parse(localStorage.getItem("userQuiz")) || [];
+    smcq = JSON.parse(localStorage.getItem("userQuiz")) || [];
 
     // Check if any answer field is empty
 
     let allAnswered = true;
-    userQuiz.forEach((s, index) => {
+    smcq.forEach((s, index) => {
         let studentAnswer1 = document.getElementById(`answer1${index}`);
         if (studentAnswer1.value === "/") {
             allAnswered = false;
@@ -152,7 +149,7 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
         return;
     }
     
-    userQuiz.forEach((s, index) => {
+    smcq.forEach((s, index) => {
         let studentAnswer1 = document.getElementById(`answer1${index}`);
         let studentValue = studentAnswer1.value;
         let resultSymbol = document.createElement("div");
@@ -170,7 +167,7 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
         resultsDiv.appendChild(resultSymbol);
     });
     
-    let totalQuestions = userQuiz.length;
+    let totalQuestions = smcq.length;
     let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
 });
