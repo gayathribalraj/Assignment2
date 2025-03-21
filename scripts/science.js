@@ -2,9 +2,10 @@ const textBoxContainer = document.getElementById('textBoxContainer');
 const addOptionButton = document.getElementById('addoption');
 const createQuestionButton = document.getElementById('createQuestionButton');
 
+
 let smcq = JSON.parse(localStorage.getItem("smcq")) || [];
 let options = []; 
-let editIndex = -1;  // To track the index of the question being edited
+let editIndex = -1;  
 
 // Add options dynamically
 addOptionButton?.addEventListener('click', function() {
@@ -49,6 +50,8 @@ function createQuestion() {
     };
 
     // If editing an existing question
+
+
     if (editIndex !== -1) {
         smcq[editIndex] = scienceQuestion;
     } else {
@@ -67,7 +70,7 @@ function createQuestion() {
     editIndex = -1;  // Reset edit index after saving
 }
 
-// Function to show the creation wizard with existing question data for editing
+
 function editQuestion(index) {
     const questionToEdit = smcq[index];
 
@@ -132,11 +135,7 @@ function clearQuestions() {
     displayQuestions();
 }
 
-function updateQuestions() {
-    // Re-render the questions when the "Update Questions" button is clicked
-    displayQuestions();
-  }
-  
+
 
 document.addEventListener("DOMContentLoaded", displayQuestions);
 
