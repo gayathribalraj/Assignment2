@@ -37,10 +37,25 @@ function displayQuestions() {
             ${p.num1}
           ${p.operator}
             ${p.num2}
+            <i class="fas fa-times delete-icon" onclick="deleteQuestion(${index})"></i>
             
         `;
         questionContainer.append(questionDiv);
     });
+}
+
+
+function deleteQuestion(index)
+{
+    const isConfirmed = window.confirm("Are you sure you want to delete this question?")
+    if(isConfirmed)
+        {
+            setTimeout(() => {
+            smcq.splice(index,1);
+
+
+         } )
+        }
 }
 
 function clearQuestions() {

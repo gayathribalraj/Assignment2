@@ -16,26 +16,25 @@
                 <li><a href="science.html">Science</a></li>
                 <li><a href="english.html">English</a></li>
                 <li><a href="index.html">Home</a></li>
-
-
             </ul>
         </div>
-        <div class="question-container" id="question-list">
-
-
+        <div class="question-container" id="question-li">
         </div>
         <div class="task-maker-container">
             <div class="task-creation-wizard">
-                <h2>Create a English Question</h2>
-                <input type="text" id="eq1" placeholder="Enter Your Question" style="margin-bottom: 10px;"><br>
-                <input type="text" id="eans1" placeholder="Enter The Answer" style="margin-bottom: 10px;"><br>
-                <button style="margin-top: 50px;" onclick="createQuestion()">Create Question</button>
+                <h2>Create a Science Question</h2>
+                <input type="text" id="q1" placeholder="Enter Your Question" style="margin-bottom: 10px;"><br>
+                <input type="text" id="q1ans" placeholder="Enter The Answer" style="margin-bottom: 10px;">
+                <button id="addoption">+</button>
+                <div id="textBoxContainer">
+                </div>
+                <button style="margin-top: 10px;" onclick="createQuestion()">Create Question</button>
                 <button onclick="clearQuestions()">Clear Questions</button>
             </div>
         </div>
     </div>
     <script src="scripts/main.js"></script>
     <script src="./scripts/menu.js"></script>
-    <script src="./scripts/english.js"></script>
+    <script src="./scripts/science.js"></script>
 </body>
 </html>

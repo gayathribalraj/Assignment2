@@ -1,42 +1,91 @@
 
-// English for Teacher Page
+//Englishefor Teacher Page
+
+
+const textBoxContainer = document.getElementById('textBoxContainer');
+const addOptionButton = document.getElementById('addoption');
+const createQuestionButton = document.querySelector("button[onclick='createQuestion()']");
+const clearQuestionsButton = document.querySelector("button[onclick='clearQuestions()']");
+
+
+// option input event 
+
+addOptionButton?.addEventListener('click', function()
+{
+    if (options.length < 4) {
+        const newOption = document.createElement('input');
+        newOption.classList.add('text-box');
+        newOption.type = 'text';
+        newOption.placeholder = `Enter Option ${options.length + 1}`;
+        textBoxContainer.appendChild(newOption);
+        options.push(newOption);
+    } else {
+        alert("You can only add up to 4 options.");
+    }
+});
+
 
 
 let emcq = JSON.parse(localStorage.getItem("emcq")) || [];
+let options = []; 
+let userAnswers = JSON.parse(localStorage.getItem("userAnswers")) || []; 
+
 
 function createQuestion() {
-    const eq1 = document.getElementById("eq1").value;
-    const eans1 = document.getElementById("eans1").value;
+    const q1 = document.getElementById("q1").value;
+    const q1ans = document.getElementById("q1ans").value;
     
-    if (eq1 === "" || eans1 === "") {
+    if (q1 === "" || q1ans === "") {
         alert("Please Fill both Qustine and Answare.");
         return;
     }
+    if (options.length < 4 )
+        {
+            alert("Please Fill the 4 options")
+            return;
+        }
+   
     
-    const question = {
+    const optionValues = options.map(option => option.value);
+   
+    if(optionValues.length < 4)
+        {
+            alert("please fill in all 4 options ")
+            return ;
+        }
+
+
+     const englishQuestion = {
         id: emcq.length + 1,
-        eq1: eq1,
-        eans1: eans1,
-      
+        q1: q1,
+        q1ans: q1ans,
+        options: optionValues
     };
-    
-    emcq.push(question);
+
+    emcq.push(englishQuestion);
     localStorage.setItem("emcq", JSON.stringify(emcq));
     
+    
+    document.getElementById("q1").value = '';
+    document.getElementById("q1ans").value = '';
+    options.forEach(option => option.value = '');
+
+
+
     displayQuestions();
 }
 
 function displayQuestions() {
-    const questionContainer = document.getElementById("question-list");
-    questionContainer.innerHTML = "";
+    const englishquestionContainer = document.getElementById("question-li");
+    englishquestionContainer.innerHTML = "";
     
-    emcq.forEach((em) => {
-        const questionDiv = document.createElement("div");
-        questionDiv.className = "question-box-english";
-        questionDiv.innerHTML = `
-            ${em.eq1}
+    emcq.forEach((s) => {
+        const englishquestionDiv = document.createElement("div");
+        englishquestionDiv.className = "question-box-english";
+        englishquestionDiv.innerHTML = `
+            ${s.q1}
         `;
-        questionContainer.append(questionDiv);
+        englishquestionContainer.append(englishequestionDiv);
     });
 }
 function clearQuestions() {
@@ -44,44 +93,64 @@ function clearQuestions() {
     localStorage.removeItem("emcq");
     displayQuestions();
 }
-
 document.addEventListener("DOMContentLoaded", displayQuestions);
 
 
-//English for student pages 
 
-function englishStudentQuestions() {
-    const englishStudentQuestionsDiv = document.getElementById("question-list");
-   englishStudentQuestionsDiv.innerHTML = "";
-   emcq = JSON.parse(localStorage.getItem("emcq")) || [];
+
+// Script for Student Page
+
+
+
+function EnglishStudentQuestions() {
+    const englishStudentQuestionsDiv = document.getElementById("question-li");
+    englishStudentQuestionsDiv.innerHTML = "";
+
     
-   emcq.forEach((e, index) => {
+    emcq = JSON.parse(localStorage.getItem("emcq")) || [];
+    //  console.log(emcq)
+
+    emcq.forEach((s, index) => {
         let div = document.createElement("div");
         div.className = "question-box-english";
-        div.innerHTML = `
-            ${e.eq1}
-            <p><input type='text' id='enganswer${index}'></p>
+        let opts = ``
+        let sel = `
+            ${s.q1}
+       <select id="answer1${index}" style="margin-bottom: 20px;">
+        <option value="/">...Select Answer</option>
+
+
         `;
-       englishStudentQuestionsDiv.appendChild(div);
+        s.options.forEach(o=>{
+            opts+=`<option value="${o}">${o}</option>`
+        })
+        sel = sel.concat(opts)
+        console.log(`${sel} </select>`)
+        div.innerHTML = `${sel} </select>`
+
+        englishStudentQuestionsDiv.appendChild(div);
+        
     });
 }
+
+
 
 document.getElementById("submit-answers").addEventListener("click", function(event) {
     event.preventDefault();
     let resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
     let correctAnswers = 0;
-    emcq = JSON.parse(localStorage.getItem("emcq")) || [];
-    
+    let allAnswered = true;
+
     // Check if any answer field is empty
 
-
-    let allAnswered = true;
-    emcq.forEach((e, index) => {
-        let studentAnswer1 = document.getElementById(`enganswer${index}`);
-        if (studentAnswer1.value === "") {
+    emcq.forEach((s, index) => {
+        let studentAnswer1 = document.getElementById(`answer1${index}`).value;
+        if (studentAnswer1.value === "/") {
             allAnswered = false;
         }
+
+        userAnswers[index] = studentAnswer1;
     });
 
     if (!allAnswered) {
@@ -89,18 +158,14 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
         return;
     }
     
-    emcq.forEach((e, index) => {
-        let studentAnswer1 = document.getElementById(`enganswer${index}`);
-        let studentValue = studentAnswer1.value;
+    emcq.forEach((s, index) => {
+        let studentAnswer1 = userAnswers[index];
         let resultSymbol = document.createElement("div");
 
-        if (studentValue === e.eans1) {
-            studentAnswer1.style.backgroundColor = "lightgreen";
-            resultSymbol.innerHTML = `<i class="fa fa-check " style="color: green;"></i> Problem ${index + 1}`; 
-            studentAnswer1.style.color = "green";
+        if (studentAnswer1 === s.q1ans) {
+            resultSymbol.innerHTML = `<i class="fa fa-check" style="color: green;"></i> Problem ${index + 1}` ; 
             correctAnswers++;
         } else {
-            studentAnswer1.style.backgroundColor = "red";
             resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`;  
         }
 
@@ -110,29 +175,28 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     let totalQuestions = emcq.length;
     let resultText = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
+
+    localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+
 });
 
-document.addEventListener("DOMContentLoaded", StudentQuestions);
 
-// restart the the calculation 
+// Restart the quiz
 
 document.getElementById("restart").addEventListener("click", function() {
-    let studentAnswer1Fields = document.querySelectorAll("[id^='enganswer']");
+    let studentAnswer1Fields = document.querySelectorAll("[id^='answer1']");
     studentAnswer1Fields.forEach(field => {
-        field.value = ''; 
-        field.style.backgroundColor = '';
-        field.style.color = ''; 
+        field.value = '/'; 
     });
     document.getElementById("results").innerHTML = ''; 
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    displayQuestions(); 
-    englishStudentQuestions();
+    if (document.body.contains(document.getElementById('question-li'))) {
+        EnglishStudentQuestions();  
+    } else {
+        displayQuestions();
+    }
 });
-
-
-
-
 
 

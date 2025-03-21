@@ -117,3 +117,28 @@ input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
+  
+.question-box-science {
+    position: relative; 
+    padding-right: 30px; 
+    margin-bottom: 10px; 
+}
+
+.delete-icon {
+    position:absolute; /* Position the icon in the top-right corner */
+    top: 0;
+    right: 2px;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+}
+.edit-icon {
+    position: absolute; ; /* Position the icon in the top-right corner */
+    top: 0;
+    left: 2px;
+    color: rgba(0, 102, 255, 0.716);
+    font-size: 20px;
+    cursor: pointer;
+}
+
