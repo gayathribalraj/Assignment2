@@ -14,7 +14,7 @@ const userQuiz = [
         "She can singing well.",
         "She can sung well."
       ],
-      answer: "She can sing well."
+      answer: "She can sing well"
     },
     {
       id: 3,

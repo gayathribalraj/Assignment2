@@ -12,7 +12,7 @@ const clearQuestionsButton = document.querySelector("button[onclick='clearQuesti
 
 addOptionButton?.addEventListener('click', function()
 {
-    if (options.length < 6) {
+    if (options.length < 4) {
         const newOption = document.createElement('input');
         newOption.classList.add('text-box');
         newOption.type = 'text';
@@ -20,7 +20,7 @@ addOptionButton?.addEventListener('click', function()
         textBoxContainer.appendChild(newOption);
         options.push(newOption);
     } else {
-        alert("You can only add up to 6 options.");
+        alert("You can only add up to 4 options.");
     }
 });
 
@@ -39,10 +39,22 @@ function createQuestion() {
         alert("Please Fill both Qustine and Answare.");
         return;
     }
+    if (options.length < 4 )
+        {
+            alert("Please Fill the 4 options")
+            return;
+        }
    
     
     const optionValues = options.map(option => option.value);
    
+    if(optionValues.length < 4)
+        {
+            alert("please fill in all 4 options ")
+            return ;
+        }
+
+
      const scienceQuestion = {
         id: smcq.length + 1,
         q1: q1,
@@ -151,7 +163,7 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
         let resultSymbol = document.createElement("div");
 
         if (studentAnswer1 === s.q1ans) {
-            resultSymbol.innerHTML = `<i class="fa fa-check" style="color: green;"></i> Problem ${index + 1}`; 
+            resultSymbol.innerHTML = `<i class="fa fa-check" style="color: green;"></i> Problem ${index + 1}` ; 
             correctAnswers++;
         } else {
             resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`;  
