@@ -178,20 +178,20 @@ function ScienceStudentQuestions() {
 
 document.getElementById("submit-answers").addEventListener("click", function(event) {
     event.preventDefault();
+
     let resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
     let correctAnswers = 0;
     let allAnswered = true;
+    let userAnswers = []; // Initialize the userAnswers array
 
     // Check if any answer field is empty
-
     smcq.forEach((s, index) => {
         let studentAnswer1 = document.getElementById(`answer1${index}`).value;
-        if (studentAnswer1.value === "/") {
+        if (studentAnswer1 === "") { // Check if input is empty
             allAnswered = false;
         }
-
-        userAnswers[index] = studentAnswer1;
+        userAnswers[index] = studentAnswer1; // Store the answer
     });
 
     if (!allAnswered) {
@@ -203,11 +203,11 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
         let studentAnswer1 = userAnswers[index];
         let resultSymbol = document.createElement("div");
 
-        if (studentAnswer1 === s.q1ans) {
-            resultSymbol.innerHTML = `<i class="fa fa-check" style="color: green;"></i> Problem ${index + 1}` ; 
+        if (studentAnswer1 === s.q1ans) { // Check if the answer is correct
+            resultSymbol.innerHTML = `<i class="fa fa-check" style="color: green;"></i> Problem ${index + 1}`;
             correctAnswers++;
         } else {
-            resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red"></i> Problem ${index + 1}`;  
+            resultSymbol.innerHTML = `<i class="fa fa-times" style="color: red;"></i> Problem ${index + 1}`;
         }
 
         resultsDiv.appendChild(resultSymbol);
@@ -218,8 +218,8 @@ document.getElementById("submit-answers").addEventListener("click", function(eve
     resultsDiv.insertAdjacentHTML("beforeend", `<h3>${resultText}</h3>`);
 
     localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
-
 });
+
 
 
 // Restart the quiz
